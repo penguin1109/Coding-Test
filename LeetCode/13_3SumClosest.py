@@ -33,20 +33,22 @@ class Solution:
         answer = 0
         N = len(nums)
         best = 1000000000
+        ## 결국에는 target과 "가까운"보다는 target과 "같은" 합이 되는 3개의 숫자 조합을 찾는 것이 관건이다.
         if N >= 3:
-            nums.sort()
+            nums.sort() ## 오름차순 정렬
             for i in range(N-2): ## mid index를 변경해 줌
                 if (i > 0 and nums[i] == nums[i-1]):continue
                 start, end = i + 1, N - 1 ## mid의 왼쪽, 마지막 원소
                 while (start < end):
                     add = nums[start] + nums[end] + nums[i]
                     if (abs(add-target) < best):
-                        best = abs(add-target)
-                        answer = add
+                        best = abs(add-target) ## 이부분에서 best갱신을 잊어서 계속 틀렸다고 나왔었다.
+                        answer = add ## answer 갱신
                     if (add < target):
-                        start += 1
+                        start += 1 ## 더 작으면 키워주자 
                     elif (add > target):
-                        end -= 1
+                        end -= 1 ## 더 크면 줄여주자
+                        
                     else: ## (add == target) -> early break
                         return target
         return answer
